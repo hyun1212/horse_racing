@@ -1,4 +1,4 @@
-package homework;
+package hosre_racing;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -15,8 +15,8 @@ public class LoginRacing extends JFrame{
 	JPanel p1,p2;
 	JButton Btn_Login,Btn_Cancel, Btn_SignUp;
 	JLabel l1, l2;
-	JTextField Tf_id;
-	JPasswordField Tf_pw;
+	JTextField tf_id;
+	JPasswordField pf_pw;
 	ResultSet rs;
 	PreparedStatement stmt;
 	
@@ -28,19 +28,17 @@ public class LoginRacing extends JFrame{
 		Btn_Login = new JButton("Login");
 		Btn_Cancel = new JButton("Close");
 		Btn_SignUp = new JButton("SignUp");
-		Tf_id = new JTextField();
-		Tf_pw = new JPasswordField();
+		tf_id = new JTextField();
+		pf_pw = new JPasswordField();
 		
-		Tf_id.selectAll(); Tf_pw.selectAll();
-		Tf_pw.setEchoChar('*');
+		tf_id.selectAll(); pf_pw.selectAll();
 		
 		l1 = new JLabel("id", JLabel.CENTER);
 		l2 = new JLabel("pw", JLabel.CENTER);
 	
-		p1.add(l1);	p1.add(Tf_id);
-		p1.add(l2);	p1.add(Tf_pw);
+		p1.add(l1);	p1.add(tf_id);
+		p1.add(l2);	p1.add(pf_pw);
 		p1.add(Btn_SignUp); p1.add(Btn_Login);
-		 // 회원가입
 		
 		// 버튼 이벤트 처리
 		
@@ -48,8 +46,17 @@ public class LoginRacing extends JFrame{
 		// db 정보 불러와서 일치하면 플레이화면 (말 선택 화면)으로 이동
 		Btn_Login.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
-				String input_id = Tf_id.getText();
-				String input_pw = Tf_pw.getText(); // 나중에 getPassword로 보완.
+				// id외 pw 텍스트 필드 값 저장 변수
+				String input_id = tf_id.getText();
+				String input_pw = "";
+				
+				// Tf_pw 필드에서 패스워드를 얻어온다.
+				char[] secret_pw = pf_pw.getPassword();
+				
+				// secret_pw 배열 크기 만큼 cha 변수에 넣고 String 형식으로 한 글자씩 추가
+				for (char cha : secret_pw) {
+					input_pw += Character.toString(cha);
+				}
 				
 				String sql = "SELECT pw FROM player WHERE id = ?";
 				
@@ -63,7 +70,6 @@ public class LoginRacing extends JFrame{
 					rs = stmt.executeQuery();
 					rs.next();
 					String out_pw = rs.getString("pw");
-					System.out.println(out_pw);
 
 					// db에서 불러온 pw와 Tf_pw와 같으면 로그인
 
@@ -74,11 +80,7 @@ public class LoginRacing extends JFrame{
 					}
 					else {
 						System.out.println("아이디와 비밀번호를 확인하세요");
-						sql = "UPDATE player SET money = 20000 WHERE id = ?";
-						stmt = conn.prepareStatement(sql);
-						stmt.setString(1, input_id);
 						
-						rs = stmt.executeQuery();
 					}
 					
 					
@@ -91,58 +93,21 @@ public class LoginRacing extends JFrame{
 			
 		});
 		
+		
+		// 회원가입 버튼 이벤트
 		Btn_SignUp.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
-				String input_id = Tf_id.getText();
-				String input_pw = Tf_pw.getText(); // 나중에 getPassword로 보완.
-				
-				String sql = "INSERT INTO player VALUES(?,?,?)";
-				
-				Connection conn = Jake();
-				
-				try {
-					
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, input_id);
-					
-					rs = stmt.executeQuery();
-					rs.next();
-					String out_pw = rs.getString("pw");
-					System.out.println(out_pw);
-
-					// db에서 불러온 pw와 Tf_pw와 같으면 로그인
-
-					if (input_pw.equals(out_pw)) {
-						System.out.println("로그인 성공");
-						new RacingGame().setLocationRelativeTo(null);
-						dispose();
-					}
-					else {
-						System.out.println("아이디와 비밀번호를 확인하세요");
-						sql = "UPDATE player SET money = 20000 WHERE id = ?";
-						stmt = conn.prepareStatement(sql);
-						stmt.setString(1, input_id);
-						
-						rs = stmt.executeQuery();
-					}
-					
-					
-				} catch (SQLException e1) {
-				
-					e1.printStackTrace();
-				}
-				
+				new SignUpRacing(); 
 			}
-			
 		});
 		
 		
-
 		add(p1);		
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(350,200);
-		this.setTitle("로그인창");
+		this.setTitle("로그인 창");
 		
 	}
  
