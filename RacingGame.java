@@ -40,7 +40,7 @@ public class RacingGame extends JFrame implements ActionListener {
 	ImageIcon[] icon = new ImageIcon[4];
 	JLabel[] iconlabel = new JLabel[4];
 	String[] rank = new String[4];
-	JLabel[] hinf = new JLabel[4]; // ¸» Á¤º¸¸¦ ´ãÀº ·¹ÀÌºí »ı¼º
+	JLabel[] hinf = new JLabel[4]; // ë§ ì •ë³´ë¥¼ ë‹´ì€ ë ˆì´ë¸” ìƒì„±
 	int tmp;
 	
 	int money = 10000;
@@ -61,7 +61,6 @@ public class RacingGame extends JFrame implements ActionListener {
 		center.setLayout(new BorderLayout());
 		inf.setLayout(new GridLayout(1, 4));
 		ButtonGroup group = new ButtonGroup();
-		information info = new information(); // information Å¬·¡½º ºÒ·¯¿Ã info.
 		
 		for(int i=0;i<4;i++) {
 			runner[i] = new JRadioButton(horse[i]);
@@ -79,8 +78,8 @@ public class RacingGame extends JFrame implements ActionListener {
 		p3.setBorder(border3);
 		Border border1 = BorderFactory.createTitledBorder("Horses");
 		p1.setBorder(border1);
-		Border border4 = BorderFactory.createTitledBorder("Horse Info"); // Á¤º¸ border »ı¼º
-		inf.setBorder(border4); // inf¿¡ border ¼³Á¤
+		Border border4 = BorderFactory.createTitledBorder("Horse Info"); // ì •ë³´ border ìƒì„±
+		inf.setBorder(border4); // infì— border ì„¤ì •
 		Border border2 = BorderFactory.createTitledBorder("Menu");
 		p2.setBorder(border2);
 		
@@ -97,12 +96,12 @@ public class RacingGame extends JFrame implements ActionListener {
 		hinf[3].setText("    win: ");
 		
 		inf.add(hinf[0]); inf.add(hinf[1]);
-		inf.add(hinf[2]); inf.add(hinf[3]); // Á¤º¸ ·¹ÀÌºíÀ» Á¤º¸ ÆĞ³ÎÀ» ÇÁ·¹ÀÓ¿¡ Ãß°¡
+		inf.add(hinf[2]); inf.add(hinf[3]); // ì •ë³´ ë ˆì´ë¸”ì„ ì •ë³´ íŒ¨ë„ì„ í”„ë ˆì„ì— ì¶”ê°€
 		
-		center.add(BorderLayout.NORTH, p1); // infoÀÇ center¿¡ p1 ¿Ã·Á³õÀ½.
+		center.add(BorderLayout.NORTH, p1); // infoì˜ centerì— p1 ì˜¬ë ¤ë†“ìŒ.
 		center.add(BorderLayout.SOUTH, inf);
 		add(BorderLayout.NORTH,p3);
-		add(BorderLayout.CENTER,center); // ¼¾ÅÍ¿¡ ¸» ¼±ÅÃ°ú Á¤º¸ ¿Ã¶ó°£ ÆĞ³Î
+		add(BorderLayout.CENTER,center); // ì„¼í„°ì— ë§ ì„ íƒê³¼ ì •ë³´ ì˜¬ë¼ê°„ íŒ¨ë„
 		add(BorderLayout.SOUTH,p2);
 				
 		setBounds(100,200,500,385);
@@ -116,14 +115,14 @@ public class RacingGame extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==b2) {	// Á¾·áÇÏ´Â Á¶°Ç¹®
+		if(e.getSource()==b2) {	// ì¢…ë£Œí•˜ëŠ” ì¡°ê±´ë¬¸
 			System.exit(1);
 		}
 		
 		for(int i=0;i<4;i++) {
 			if(e.getSource() == runner[i]) 
 			{
-				tmp = i;	// ¾×¼Ç¸®½º³Ê°¡ ¶óµğ¿À¹öÆ°°ª°ú ±×³É ¹öÆ°°ªÀ» µ¿½Ã¿¡ ¸ø¹Ş±â¶§¹®¿¡..
+				tmp = i;	// ì•¡ì…˜ë¦¬ìŠ¤ë„ˆê°€ ë¼ë””ì˜¤ë²„íŠ¼ê°’ê³¼ ê·¸ëƒ¥ ë²„íŠ¼ê°’ì„ ë™ì‹œì— ëª»ë°›ê¸°ë•Œë¬¸ì—..
 				hinf[0].setText(hstring[i][0]);
 				hinf[1].setText(hstring[i][1]);
 				hinf[2].setText(hstring[i][2]);
@@ -131,7 +130,7 @@ public class RacingGame extends JFrame implements ActionListener {
 			}
 		}
 		System.out.println(tmp);
-		if(e.getSource()==b1 && tmp != 999)  // °ÔÀÓÀ» ½ÃÀÛÇÏ´Â Á¶°Ç¹®
+		if(e.getSource()==b1 && tmp != 999)  // ê²Œì„ì„ ì‹œì‘í•˜ëŠ” ì¡°ê±´ë¬¸
 		{	
 			new Game();
 		}	
@@ -141,16 +140,16 @@ public class RacingGame extends JFrame implements ActionListener {
 		
 		public Game() {
 			JFrame game = new JFrame("<Game Screen>");
-			for(int i=0;i<4;i++) {	// °æÁÖ¸¶µé ·©Å· ÃÊ±âÈ­
+			for(int i=0;i<4;i++) {	// ê²½ì£¼ë§ˆë“¤ ë­í‚¹ ì´ˆê¸°í™”
 				rank[i] = null;
 			}
-			p4 = new JPanel(); // °æ¸¶°ÔÀÓ½ºÅ©¸° ÆĞ³Î
+			p4 = new JPanel(); // ê²½ë§ˆê²Œì„ìŠ¤í¬ë¦° íŒ¨ë„
 			p4.setLayout(new GridLayout(4,1));
 			b3 = new JButton("Start");
-			p4.add(new Screen("bet",15,15,"1¹ø¸¶"));
-			p4.add(new Screen("trojan",15,15,"2¹ø¸¶"));
-			p4.add(new Screen("horseback",15,15,"3¹ø¸¶"));
-			p4.add(new Screen("pegasus",15,15,"4¹ø¸¶"));
+			p4.add(new Screen("bet",15,15,"1ë²ˆë§ˆ"));
+			p4.add(new Screen("trojan",15,15,"2ë²ˆë§ˆ"));
+			p4.add(new Screen("horseback",15,15,"3ë²ˆë§ˆ"));
+			p4.add(new Screen("pegasus",15,15,"4ë²ˆë§ˆ"));
 		
 			game.add(p4);
 			game.repaint();
@@ -176,16 +175,16 @@ public class RacingGame extends JFrame implements ActionListener {
 			Border border = BorderFactory.createTitledBorder(lane);
 			this.setBorder(border);
 			MyThread tt = new MyThread(h_name);
-			tt.start();	//	¾²·¹µå »ç¿ë
+			tt.start();	//	ì“°ë ˆë“œ ì‚¬ìš©
 		}
 		public class MyThread extends Thread {
 			String hname;
-		    // Thread·Î µ¿ÀÛÇÒ ³»¿ëÀ» µ¿ÀÛÇÒ ¸Ş¼­µå
+		    // Threadë¡œ ë™ì‘í•  ë‚´ìš©ì„ ë™ì‘í•  ë©”ì„œë“œ
 			MyThread(String h_name){
 				hname = h_name;
 			}
 		    public void run() {
-		        // 0.5ÃÊ ¸¶´Ù ¼ıÀÚ¸¦ ÇÏ³ª¾¿ Áõ°¡½ÃÅ°°í ¼ıÀÚ¿Í ThreadÀÇ ÀÌ¸§À» Ãâ·ÂÇÑ´Ù
+		        // 0.5ì´ˆ ë§ˆë‹¤ ìˆ«ìë¥¼ í•˜ë‚˜ì”© ì¦ê°€ì‹œí‚¤ê³  ìˆ«ìì™€ Threadì˜ ì´ë¦„ì„ ì¶œë ¥í•œë‹¤
 		        while(img_x < 1200){
 		        	img_x += (int)(Math.random()*80);
 		        	repaint();
@@ -196,11 +195,11 @@ public class RacingGame extends JFrame implements ActionListener {
 		                System.out.println(e.getMessage());
 		            }
 		        }
-		        for(int i=0;i<4;i++) {	// ¼øÀ§¸¦ ¸Å°ÜÁÖ´Â Á¶°Ç & ¹İº¹¹®
+		        for(int i=0;i<4;i++) {	// ìˆœìœ„ë¥¼ ë§¤ê²¨ì£¼ëŠ” ì¡°ê±´ & ë°˜ë³µë¬¸
 		        	if(rank[i] == null) {
 		        		rank[i] = hname;
 		        		System.out.println(rank[i]);
-		        		// °è»ê
+		        		// ê³„ì‚°
 		    			if(rank[3] != null) {
 		    				bet_money = Integer.parseInt(betting.getText());
 			    			money -= bet_money;
@@ -208,12 +207,12 @@ public class RacingGame extends JFrame implements ActionListener {
 		    					bet_money *= 4;
 		    					money += bet_money;
 		    					balance.setText(Integer.toString(money));
-		    					System.out.println("ÃàÇÏ ");
+		    					System.out.println("ì¶•í•˜ ");
 		    				}	
 		    				else {
 		    					bet_money = 0;
 		    					balance.setText(Integer.toString(money));
-		    					System.out.println("½ÇÆĞ ");  
+		    					System.out.println("ì‹¤íŒ¨ ");  
 		    				}
 		    			}
 		        		break;
